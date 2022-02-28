@@ -31,26 +31,63 @@ graph["I"] = ["C", "J"]
 graph["J"] = ["I"]
 
 # BFS 구현
-# 시작 노드 A
-visited = ["A"]
-need_visit = ["A"]
+# visited는 queue, need_visit도 queue
+def bfs_mine(graph, start_node):
+    visited = [start_node] # queue
+    need_visit = [start_node] # queue
 
-while True:
+    while True:
 
-    if len(visited) == len(graph):
-        break
+        if len(visited) == len(graph):
+            break
 
-    visit = need_visit.pop(0)
+        visit = need_visit.pop(0)
 
-    for ele in graph[visit]:
-        if ele not in visited:
-            need_visit.append(ele)
-            visited.append(ele)
-
-
-print(visited)
+        for ele in graph[visit]:
+            if ele not in visited:
+                need_visit.append(ele)
+                visited.append(ele)
+    return visited
 
 
+
+def bfs_lecture(graph, start_node):
+    visited = []
+    need_visit = [start_node]
+
+    while need_visit:
+
+        node = need_visit.pop(0)
+
+        if node not in visited:
+            visited.append(node)
+            need_visit.extend(graph[node])
+    return visited
+
+
+print(bfs_mine(graph, "A"))
+print(bfs_lecture(graph, "A"))
+"""
+시간복잡도는 O(V+E)
+"""
+
+
+# dfs 구현
+# visited는 queue, need_visit은 stack
+def dfs_mine(graph, start_node):
+    visited = [] # queue
+    need_visit = [start_node] # stack
+
+
+    while need_visit:
+        node = need_visit.pop()
+
+        if node not in visited:
+            visited.append(node)
+            need_visit.extend(graph[node])
+
+    return visited
+print(dfs_mine(graph, "A"))
 
 
 
